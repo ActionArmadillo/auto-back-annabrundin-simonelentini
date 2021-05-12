@@ -1,0 +1,21 @@
+{
+  "name": "front-end-tests",
+
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --spec cypress/integration/testsuite.spec.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+
+    "cypress": "^7.2.0",
+    "faker": "^5.5.3"
+  }
+}
+

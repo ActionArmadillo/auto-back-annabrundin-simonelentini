@@ -1,0 +1,36 @@
+{
+	"name": "hotel-test",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint",
+		"dev": "nodemon index.js",
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"core-js": "^3.10.0",
+		"cors": "^2.8.5",
+		"express": "^4.17.1",
+		"ts-md5": "^1.2.7",
+		"vue": "^2.6.12",
+		"vue-class-component": "^7.2.6",
+		"vue-property-decorator": "^8.5.1",
+		"vue-router": "^3.5.1",
+		"vuex": "^3.6.2",
+		"vuex-persist": "^2.3.0"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^4.5.12",
+		"@vue/cli-plugin-typescript": "^4.5.12",
+		"@vue/cli-service": "^4.5.12",
+		"cypress": "^7.1.0",
+		"node-sass": "^4.14.1",
+		"nodemon": "^2.0.7",
+		"sass-loader": "^8.0.2",
+		"typescript": "^3.7.7",
+		"vue-template-compiler": "^2.6.12"
+	}
+}
