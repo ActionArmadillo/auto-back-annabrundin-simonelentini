@@ -1,6 +1,7 @@
 /// <reference types = "cypress" />
 
 describe("Test suite for the backend tests of Hotel site", () => {
+   
     beforeEach(() => {
         cy.login()
     });
