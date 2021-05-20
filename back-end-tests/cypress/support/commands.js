@@ -30,7 +30,6 @@ Cypress.Commands.add('login', () => {
         "password": "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
     }
 
-
     cy.request({
         method: 'POST',
         url: 'http://localhost:3000/api/login',
