@@ -1,7 +1,7 @@
 /// <reference types = "cypress" />
 
 describe("Test suite for the backend tests of Hotel site", () => {
-   
+
     beforeEach(() => {
         cy.login()
     });
@@ -198,4 +198,173 @@ describe("Test suite for the backend tests of Hotel site", () => {
 
 
     })
+    it("TCO7 - Create new bill", () => {
+
+        // Get the bills list
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/bills",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+        });
+
+        //Create a bill request
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:3000/api/bill/new',
+            headers: {
+                'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                'Content-Type': 'application/json'
+            },
+            body: {
+                "id": "",
+                "created": "",
+                "value": 500,
+                "paid": false
+            }
+        }).then((response => {
+            expect(response.status).to.eq(200)
+        }))
+
+        // the check last created bill
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/bills",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            let lastID = response.body[response.body.length - 1].id
+            cy.log(lastID)
+
+            cy.request({
+                method: 'GET',
+                url: 'http://localhost:3000/api/bill/' + lastID,
+                headers: {
+                    'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                    'Content-Type': 'application/json'
+                }
+            }).then((response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body))
+            }))
+
+            //list of bills
+            cy.request({
+                method: "GET",
+                url: "http://localhost:3000/api/bills",
+                headers: {
+                    "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                    "Content-Type": "application/json",
+                },
+            }).then((response) => {
+                expect(response.status).to.eq(200);
+                cy.log(JSON.stringify(response.body))
+            });
+
+            // Delete the created bill
+            cy.request({
+                method: 'DELETE',
+                url: 'http://localhost:3000/api/bill/' + lastID,
+                headers: {
+                    'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                    'Content-Type': 'application/json'
+                }
+            }).then((response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body))
+            }))
+        })
+
+        // Get the bills list (to confirm the created client as been deleted)
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/bills",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+        });
+
+    })
+
+    it("TCO8 - edit a bill", () => {
+
+        //Create a bill request
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:3000/api/bill/new',
+            headers: {
+                'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                'Content-Type': 'application/json'
+            },
+            body: {
+                "id": "",
+                "created": "",
+                "value": 10500,
+                "paid": false
+            }
+        }).then((response => {
+            expect(response.status).to.eq(200)
+            cy.log(JSON.stringify(response.body))
+        }))
+
+        // the check last created bill
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/bills",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+           
+            // edit the bill id 2
+            cy.request({
+                method: 'Put',
+                url: 'http://localhost:3000/api/bill/2',
+                headers: {
+                    'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                    'Content-Type': 'application/json'
+                },
+                body: {
+                    "id": 2,
+                    "value": 10500,
+                    "paid": true
+                }
+            }).then((response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body))
+
+            }))
+
+        })
+
+        // Get the bills list 
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/bills",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+        });
+
+    })
+
 })
