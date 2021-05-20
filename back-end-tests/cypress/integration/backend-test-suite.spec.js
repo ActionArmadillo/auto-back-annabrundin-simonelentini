@@ -341,6 +341,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
                 },
                 body: {
                     "id": 2,
+                    "created":"2020-01-05T12:00:00.000Z",
                     "value": 10500,
                     "paid": true
                 }
