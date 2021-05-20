@@ -1,29 +1,37 @@
 /// <reference types = "cypress" />
 
 describe("Test suite for the backend tests of Hotel site", () => {
-    it("TC01 - Login to the application", () => {
-        //cy.login()
-        const USER_CREDENTIALS = {
-            username: "tester01",
-            password: "GteteqbQQgSr88SwNExUQv2ydb7xuf8c",
-        };
-
-        cy.request({
-            method: "POST",
-            url: "http://localhost:3000/api/login",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(USER_CREDENTIALS),
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            Cypress.env({ loginToken: response.body });
-            cy.log(response.body);
-        });
+    beforeEach(() => {
+        cy.login()
     });
 
+    afterEach(() => {
+        cy.logout()
+    });
+
+    /*  it("TC01 - Login to the application", () => {
+          //cy.login()
+          const USER_CREDENTIALS = {
+              username: "tester01",
+              password: "GteteqbQQgSr88SwNExUQv2ydb7xuf8c",
+          };
+  
+          cy.request({
+              method: "POST",
+              url: "http://localhost:3000/api/login",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify(USER_CREDENTIALS),
+          }).then((response) => {
+              expect(response.status).to.eq(200);
+              Cypress.env({ loginToken: response.body });
+              cy.log(response.body);
+          });
+      });
+  */
     it("TC02 - GET Rooms list", () => {
-      
+
         cy.request({
             method: "GET",
             url: "http://localhost:3000/api/rooms",
@@ -95,7 +103,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body))
             }))
-           
+
             //list of clients
             cy.request({
                 method: "GET",
@@ -122,7 +130,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
                 cy.log(JSON.stringify(response.body))
             }))
         })
-        
+
         // Get the clients list (confirm the created client as been deleted)
         cy.request({
             method: "GET",
