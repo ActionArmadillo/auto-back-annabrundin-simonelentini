@@ -36,7 +36,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
         });
     });
 
-    it('TCO5 - Create new client', () => {
+    it("TCO5 - Create new client", () => {
 
         // Get the clients list
         cy.request({

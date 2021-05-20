@@ -1,6 +1,5 @@
 {
   "name": "front-end-tests",
-
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,9 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-
     "cypress": "^7.2.0",
     "faker": "^5.5.3"
   }
 }
-
