@@ -23,6 +23,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
     });
 
     it("TC02 - GET Rooms list", () => {
+      
         cy.request({
             method: "GET",
             url: "http://localhost:3000/api/rooms",
@@ -50,7 +51,6 @@ describe("Test suite for the backend tests of Hotel site", () => {
             expect(response.status).to.eq(200);
             cy.log(JSON.stringify(response.body))
         });
-
 
         //Create a client request
         cy.request({
@@ -95,6 +95,98 @@ describe("Test suite for the backend tests of Hotel site", () => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body))
             }))
+           
+            //list of clients
+            cy.request({
+                method: "GET",
+                url: "http://localhost:3000/api/clients",
+                headers: {
+                    "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                    "Content-Type": "application/json",
+                },
+            }).then((response) => {
+                expect(response.status).to.eq(200);
+                cy.log(JSON.stringify(response.body))
+            });
+
+            // Delete the created client
+            cy.request({
+                method: 'DELETE',
+                url: 'http://localhost:3000/api/client/' + lastID,
+                headers: {
+                    'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                    'Content-Type': 'application/json'
+                }
+            }).then((response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body))
+            }))
         })
+        
+        // Get the clients list (confirm the created client as been deleted)
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/clients",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+        });
+
     })
-});
+
+    it("TCO6 - Edit client", () => {
+
+        // Get the client ID 1
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/client/1",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            },
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+        });
+
+
+        //Edit the client ID 1
+        cy.request({
+            method: 'Put',
+            url: 'http://localhost:3000/api/client/1',
+            headers: {
+                'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
+                'Content-Type': 'application/json'
+            },
+            body: {
+                "id": 1,
+                "created": "2020-01-05T12:00:00.000Z",
+                "name": "Herr Gurka",
+                "email": "long@giant.com",
+                "telephone": "1111 2222 3333"
+            }
+        }).then((response => {
+            expect(response.status).to.eq(200)
+
+        }))
+
+        // Check the edited client (ID 1)
+        cy.request({
+            method: "GET",
+            url: "http://localhost:3000/api/client/1",
+            headers: {
+                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
+                "Content-Type": "application/json",
+            }
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+        })
+
+
+    })
+})
