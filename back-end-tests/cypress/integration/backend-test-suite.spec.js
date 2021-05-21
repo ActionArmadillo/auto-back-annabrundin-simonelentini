@@ -46,20 +46,13 @@ describe("Test suite for the backend tests of Hotel site", () => {
         });
     });
 
-    it("TCO5 - Create new client", () => {
+    it.only("TCO5 - Create new client", () => {
 
         // Get the clients list
-        cy.request({
-            method: "GET",
-            url: "http://localhost:3000/api/clients",
-            headers: {
-                "X-User-Auth": JSON.stringify(Cypress.env().loginToken),
-                "Content-Type": "application/json",
-            },
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            cy.log(JSON.stringify(response.body))
-        });
+        cy.getClients().then((response) => {
+                expect(response.status).to.eq(200);
+                cy.log(JSON.stringify(response.body))
+            });
 
         //Create a client request
         cy.request({
@@ -330,7 +323,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
         }).then((response) => {
             expect(response.status).to.eq(200);
             cy.log(JSON.stringify(response.body))
-           
+
             // edit the bill id 2
             cy.request({
                 method: 'Put',
@@ -341,7 +334,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
                 },
                 body: {
                     "id": 2,
-                    "created":"2020-01-05T12:00:00.000Z",
+                    "created": "2020-01-05T12:00:00.000Z",
                     "value": 10500,
                     "paid": true
                 }
@@ -367,5 +360,4 @@ describe("Test suite for the backend tests of Hotel site", () => {
         });
 
     })
-
 })
