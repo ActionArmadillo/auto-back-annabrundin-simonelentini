@@ -43,8 +43,9 @@ Cypress.Commands.add('login', () => {
         cy.log(response.body)
     }))
 })
+
+
 Cypress.Commands.add('logout', () => {
-    
     cy.request({
         method: 'POST',
         url: 'http://localhost:3000/api/logout',
@@ -57,5 +58,6 @@ Cypress.Commands.add('logout', () => {
         expect(response.status).to.eq(200)
         Cypress.env({ loginToken: response.body })
         cy.log(response.body)
+
     }))
 })
