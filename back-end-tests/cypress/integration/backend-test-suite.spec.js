@@ -139,7 +139,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
 
     })
 
-    it.only("TCO8 - edit a bill", () => {
+    it("TCO8 - edit a bill", () => {
 
         //Create a bill request
         cy.createNewBill("", "", 10500, false).then((response => {
