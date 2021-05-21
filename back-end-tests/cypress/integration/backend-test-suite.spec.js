@@ -93,7 +93,7 @@ describe("Test suite for the backend tests of Hotel site", () => {
 
 
     })
-    it("TCO7 - Create new bill", () => {
+    it("TCO7 - Create new bill and delete", () => {
 
         // Get the bills list
         cy.getBills().then((response) => {
