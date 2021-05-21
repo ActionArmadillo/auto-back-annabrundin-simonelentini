@@ -1,7 +1,5 @@
 /// <reference types = "cypress" />
 // Rooms and room api functionality
-
-
 const NEW_ROOM_URL = 'http://localhost:3000/api/room/new';
 const ROOMS_URL = 'http://localhost:3000/api/rooms';
 const ROOM_URL = 'http://localhost:3000/api/room/';

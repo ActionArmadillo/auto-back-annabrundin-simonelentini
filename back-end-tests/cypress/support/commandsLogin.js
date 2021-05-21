@@ -15,9 +15,7 @@ Cypress.Commands.add('login', () => {
     }).then((response => {
         expect(response.status).to.eq(200)
         Cypress.env({ loginToken: response.body })
-        cy.log('got here')
         cy.log(response.body)
-        cy.log('got here 2')
     }))
 })
 

@@ -1,90 +1,87 @@
 /// <reference types = "cypress" />
 
-
 //-----------------------------------------------------------------//
 //                          variables                              //
 //-----------------------------------------------------------------//
 
+
+//-----------------------------------------------------------------//
+//                          test cases                             //
+//-----------------------------------------------------------------//
+
 describe('Test suite for the backend tests of Hotel site', () => {
+    beforeEach(() => {
+        cy.login()
+    })
 
     afterEach(() => {
         cy.logout()
     });
 
-    /*
-    it('TC01 - Login to the application', () => {
-        const USER_CREDENTIALS = {
-            "username": "tester01",
-            "password": "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
-        }
-
-        cy.request({
-            method: 'POST',
-            url: 'http://localhost:3000/api/login',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(USER_CREDENTIALS)
-        }).then((response => {
+    it('TC02 - Create a new Room', () => {
+        cy.createNewRoom("", "", "double", 44441, 133, true, 440, ["balcony", "ensuite"]).then((response => {
             expect(response.status).to.eq(200)
-            Cypress.env({ loginToken: response.body })
-            cy.log(response.body)
+            cy.log(JSON.stringify(response.body))
         }))
-    })
-    */
 
-    it('TC03 - Create a new Room', () => {
-        cy.login().then((response => {
-            cy.log(Cypress.env().loginToken)
+        cy.getRooms().then((response => {
+            expect(response.status).to.eq(200)
+            let lastID = response.body[response.body.length - 1].id
+            var roomData = response.body[lastID - 1]
 
-            cy.createNewRoom("", "", "double", 44441, 133, true, 440, ["balcony", "ensuite"]).then((response => {
-                expect(response.status).to.eq(200)
-                cy.log(JSON.stringify(response.body))
-                cy.log('----')
-            }))
-
-            cy.getRooms().then((response => {
-                expect(response.status).to.eq(200)
-                let lastID = response.body[response.body.length - 1].id
-                cy.log('---------')
-                cy.log('last room ' + JSON.stringify(response.body[lastID - 1]))
-                //var roomData = JSON.parse(response.body[2])
-                cy.log('room data ' + response.body[lastID - 1].created)
-                expect(response.body[lastID - 1].category).to.eq("double")
-
-                //var roomData = JSON.stringify(response.body[lastID - 1])
-                //cy.log('room data' + roomData)
-                //expect(roomData.category).to.eq("double")
-            }))
+            // assert that the new room is created correctly
+            expect(roomData.id).is.greaterThan(2)
+            expect(roomData.created).is.not.empty
+            expect(roomData.category).to.eq("double")
+            expect(roomData.floor).to.eq(44441)
+            expect(roomData.number).to.eq(133)
+            expect(roomData.available).to.be.true
+            expect(roomData.price).to.eq(440)
+            expect(roomData.features).to.contain("balcony", "ensuite")
         }))
     })
 
-    it('TC04 - Edit and Delete last Room', () => {
-        cy.login().then((response => {
-            //cy.log(Cypress.env().loginToken)
-            cy.getRooms().then((response => {
+    it('TC03 - Edit last Room', () => {
+        cy.getRooms().then((response => {
+            expect(response.status).to.eq(200)
+        })).then((response => {
+            let lastID = response.body[response.body.length - 1].id
+
+            cy.log(lastID)
+            cy.editRoom(lastID, "", "double", 5, 555, true, 1024, ["ensuite", "sea_view"]).then((response => {
                 expect(response.status).to.eq(200)
-                //cy.log(JSON.stringify(response.body[2]))
-            })).then((response => {
-                let lastID = response.body[response.body.length - 1].id
-                cy.log(lastID)
-                cy.editRoom(lastID, "", "double", 5, 555, true, 1024, ["ensuite", "sea_view"]).then((response => {
-                    expect(response.status).to.eq(200)
-                    cy.log(JSON.stringify(response.body[2]))
-                }))
+                cy.log(JSON.stringify(response.body[2]))
             }))
         }))
 
         cy.getRooms().then((response => {
             expect(response.status).to.eq(200)
-            //cy.log(JSON.stringify(response.body[2]))
+            let lastID = response.body[response.body.length - 1].id
+            var roomData = response.body[lastID - 1]
+
+            expect(roomData.floor).to.eq(5)
+            expect(roomData.number).to.eq(555)
+            expect(roomData.available).to.be.true
+            expect(roomData.price).to.eq(1024)
+            expect(roomData.features).to.contain("ensuite", "sea_view")
+        }))
+    })
+
+    it('TC04 - Delete last Room', () => {
+        cy.getRooms().then((response => {
+            expect(response.status).to.eq(200)
         })).then((response => {
             let lastID = response.body[response.body.length - 1].id
-            cy.log(lastID)
+            var roomID = response.body[lastID - 1].id
+            cy.log("room id " + roomID)
             cy.deleteRoom(lastID).then((response => {
                 expect(response.status).to.eq(200)
-                cy.log(JSON.stringify(response.body[2]))
             }))
+        }))
+
+        cy.getRooms().then((response => {
+            expect(response.status).to.eq(200)
+            expect(response.body[response.body.length - 1].id).to.be.lessThan(3)
         }))
     })
 })
