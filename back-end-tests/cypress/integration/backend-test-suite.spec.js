@@ -119,17 +119,17 @@ describe('Test suite for the backend tests of Hotel site', () => {
             expect(clientData.name).to.eq("Herr Gurka")
             expect(clientData.email).to.eq("green@giant.com")
             expect(clientData.telephone).to.eq("2525 6677 3131")
-         })).then((response => {
+        })).then((response => {
             let lastID = response.body[response.body.length - 1].id
             cy.deleteClient(lastID).then((response => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body))
             })).then((response) => {
-            cy.getClients().then((response) => {
-                expect(response.status).to.eq(200);
-                cy.log(JSON.stringify(response.body))
-            });
-        })
+                cy.getClients().then((response) => {
+                    expect(response.status).to.eq(200);
+                    cy.log(JSON.stringify(response.body))
+                });
+            })
 
         }))
     })
@@ -182,6 +182,8 @@ describe('Test suite for the backend tests of Hotel site', () => {
 
             cy.getBill(lastID).then((response => {
                 expect(response.status).to.eq(200)
+                expect(response.body.value).to.eq(500)
+                expect(response.body.paid).to.be.false
                 cy.log(JSON.stringify(response.body))
             }))
 
@@ -223,6 +225,8 @@ describe('Test suite for the backend tests of Hotel site', () => {
                 // edit the last bill
                 cy.editBill(lastID, "2020-01-05T12:00:00.000Z", 10500, true).then((response => {
                     expect(response.status).to.eq(200)
+                    expect(response.body.value).to.eq(10500)
+                    expect(response.body.paid).to.be.true
                     cy.log(JSON.stringify(response.body))
 
                 }))
