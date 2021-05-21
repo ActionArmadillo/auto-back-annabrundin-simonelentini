@@ -18,6 +18,13 @@ describe('Test suite for the backend tests of Hotel site', () => {
         cy.logout()
     });
 
+    it('TC01 - Retrieve rooms list', () => {
+        cy.getRooms().then((response => {
+            expect(response.status).to.eq(200)
+            expect(response.body).not.be.empty
+        }))
+    })
+
     it('TC02 - Create a new Room', () => {
         cy.createNewRoom("", "", "double", 44441, 133, true, 440, ["balcony", "ensuite"]).then((response => {
             expect(response.status).to.eq(200)
@@ -46,9 +53,11 @@ describe('Test suite for the backend tests of Hotel site', () => {
             expect(response.status).to.eq(200)
         })).then((response => {
             let lastID = response.body[response.body.length - 1].id
+            let created = response.body[lastID - 1].created
 
-            cy.log(lastID)
-            cy.editRoom(lastID, "", "double", 5, 555, true, 1024, ["ensuite", "sea_view"]).then((response => {
+            cy.log(JSON.stringify(response.body))
+
+            cy.editRoom(lastID, created, "double", 5, 555, true, 1024, ["ensuite", "sea_view"]).then((response => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body[2]))
             }))
