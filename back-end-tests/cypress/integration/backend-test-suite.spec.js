@@ -33,7 +33,6 @@ describe('Test suite for the backend tests of Hotel site', () => {
     })
     */
 
-
     it('TC03 - Create a new Room', () => {
         cy.login().then((response => {
             cy.log(Cypress.env().loginToken)
@@ -41,21 +40,28 @@ describe('Test suite for the backend tests of Hotel site', () => {
             cy.createNewRoom("", "", "double", 44441, 133, true, 440, ["balcony", "ensuite"]).then((response => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body))
+                cy.log('----')
             }))
 
             cy.getRooms().then((response => {
-
                 expect(response.status).to.eq(200)
                 let lastID = response.body[response.body.length - 1].id
-                cy.log(JSON.stringify(response.body[lastID]))
+                cy.log('---------')
+                cy.log('last room ' + JSON.stringify(response.body[lastID - 1]))
+                //var roomData = JSON.parse(response.body[2])
+                cy.log('room data ' + response.body[lastID - 1].created)
+                expect(response.body[lastID - 1].category).to.eq("double")
+
+                //var roomData = JSON.stringify(response.body[lastID - 1])
+                //cy.log('room data' + roomData)
+                //expect(roomData.category).to.eq("double")
             }))
         }))
     })
 
     it('TC04 - Edit and Delete last Room', () => {
         cy.login().then((response => {
-            cy.log(Cypress.env().loginToken)
-
+            //cy.log(Cypress.env().loginToken)
             cy.getRooms().then((response => {
                 expect(response.status).to.eq(200)
                 //cy.log(JSON.stringify(response.body[2]))
@@ -66,7 +72,6 @@ describe('Test suite for the backend tests of Hotel site', () => {
                     expect(response.status).to.eq(200)
                     cy.log(JSON.stringify(response.body[2]))
                 }))
-
             }))
         }))
 
@@ -80,8 +85,6 @@ describe('Test suite for the backend tests of Hotel site', () => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body[2]))
             }))
-
         }))
     })
-
 })
