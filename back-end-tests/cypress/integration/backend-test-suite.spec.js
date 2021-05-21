@@ -134,7 +134,6 @@ describe('Test suite for the backend tests of Hotel site', () => {
         }))
     })
 
-
     it("TCO6 - Edit client", () => {
 
         // Get the client ID 1
@@ -153,6 +152,9 @@ describe('Test suite for the backend tests of Hotel site', () => {
         // Check the edited client (ID 1)
         cy.getClient(1).then((response) => {
             expect(response.status).to.eq(200);
+            expect(response.body.name).to.eq("Herr Gurka")
+            expect(response.body.email).to.eq("long@giant.com")
+            expect(response.body.telephone).to.eq("1111 2222 3333")
             cy.log(JSON.stringify(response.body))
         })
 
