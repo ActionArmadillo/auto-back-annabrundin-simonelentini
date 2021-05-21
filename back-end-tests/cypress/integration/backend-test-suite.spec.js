@@ -111,36 +111,29 @@ describe('Test suite for the backend tests of Hotel site', () => {
             }))
 
         // the check last created client
-        cy.getClients().then((response) => {
+        cy.getClients().then((response => {
             expect(response.status).to.eq(200)
             let lastID = response.body[response.body.length - 1].id
-            cy.log(lastID)
+            var clientData = response.body[lastID - 1]
 
-            cy.getClient(lastID).then((response => {
+            expect(clientData.name).to.eq("Herr Gurka")
+            expect(clientData.email).to.eq("green@giant.com")
+            expect(clientData.telephone).to.eq("2525 6677 3131")
+         })).then((response => {
+            let lastID = response.body[response.body.length - 1].id
+            cy.deleteClient(lastID).then((response => {
                 expect(response.status).to.eq(200)
                 cy.log(JSON.stringify(response.body))
-            }))
-
-            //list of clients
+            })).then((response) => {
             cy.getClients().then((response) => {
                 expect(response.status).to.eq(200);
                 cy.log(JSON.stringify(response.body))
             });
-
-            // Delete the created client
-            cy.deleteClient(lastID).then((response => {
-                expect(response.status).to.eq(200)
-                cy.log(JSON.stringify(response.body))
-            }))
         })
 
-        // Get the clients list (confirm the created client as been deleted)
-        cy.getClients().then((response) => {
-            expect(response.status).to.eq(200);
-            cy.log(JSON.stringify(response.body))
-        });
-
+        }))
     })
+
 
     it("TCO6 - Edit client", () => {
 
