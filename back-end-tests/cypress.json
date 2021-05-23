@@ -1,1 +1,11 @@
-{}
+{
+    "chromeWebSecurity": false,
+    "reporter": "mochawesome",
+    "reporterOptions": {
+        "reportDir": "cypress/report/m-report",
+        "overwrite": false,
+        "html": true,
+        "json": true,
+        "timestamp": "yyyy/mm/dd_HHMMss"
+    }
+}
