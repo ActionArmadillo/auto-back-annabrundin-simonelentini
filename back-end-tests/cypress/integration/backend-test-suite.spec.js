@@ -276,7 +276,6 @@ describe('Test suite for the backend tests of Hotel site', () => {
                     expect(response.body.room).to.eq(1)
                     expect(response.body.bill).to.eq(1)
                     cy.log(JSON.stringify(response.body))
-
                 })
 
                 // delete the last reservation
