@@ -240,4 +240,39 @@ describe('Test suite for the backend tests of Hotel site', () => {
         }))
 
     })
+
+   it("TCO9 - Create, edit and delete a Reservation", () => {
+
+        //Create a bill request
+        cy.createNewBill("", "", 10500, false).then((response => {
+            expect(response.status).to.eq(200)
+            cy.log(JSON.stringify(response.body))
+
+            // the check last created bill
+            cy.getBills().then((response) => {
+                expect(response.status).to.eq(200);
+                cy.log(JSON.stringify(response.body))
+                let lastID = response.body[response.body.length - 1].id
+                cy.log(lastID)
+
+                // edit the last bill
+                cy.editBill(lastID, "2020-01-05T12:00:00.000Z", 10500, true).then((response => {
+                    expect(response.status).to.eq(200)
+                    expect(response.body.value).to.eq(10500)
+                    expect(response.body.paid).to.be.true
+                    cy.log(JSON.stringify(response.body))
+
+                }))
+
+            })
+
+            cy.getBills().then((response) => {
+                expect(response.status).to.eq(200);
+                cy.log(JSON.stringify(response.body))
+            })
+        }))
+
+    }) 
+
+
 })
