@@ -245,7 +245,7 @@ describe('Test suite for the backend tests of Hotel site', () => {
 
     })
 
-   it("TCO9 - Create, edit and delete a Reservation", () => {
+    it("TCO9 - Create a Reservation", () => {
 
         //Create a reservation request
         cy.createNewReservation("", "", "2021-05-12", "2021-06-04", 1, 1, 1).then((response => {
@@ -259,37 +259,53 @@ describe('Test suite for the backend tests of Hotel site', () => {
                 let lastID = response.body[response.body.length - 1].id
                 cy.log(lastID)
 
-                // edit the last reservation
-                cy.editReservation(lastID, "2020-01-05T12:00:00.000Z", "2021-05-25", "2021-06-30", 1, 1, 1).then((response => {
-                    expect(response.status).to.eq(200)
-                    cy.log(JSON.stringify(response.body))
-
-                }))
-               
                 // check the last reservation
                 cy.getReservation(lastID).then((response) => {
                     expect(response.status).to.eq(200);
-                    expect(response.body.created).to.eq("2020-01-05T12:00:00.000Z")
-                    expect(response.body.start).to.eq("2021-05-25")
-                    expect(response.body.end).to.eq("2021-06-30")
+                    expect(response.body.start).to.eq("2021-05-12")
+                    expect(response.body.end).to.eq("2021-06-04")
                     expect(response.body.client).to.eq(1)
                     expect(response.body.room).to.eq(1)
                     expect(response.body.bill).to.eq(1)
                     cy.log(JSON.stringify(response.body))
                 })
+            })
+        }))
+    })
+    it("TC1O - Edit and delete a Reservation", () => {
 
-                // delete the last reservation
-                cy.deleteReservation(lastID).then((response => {
-                    expect(response.status).to.eq(200)
-                    cy.log(JSON.stringify(response.body))
-                }))
 
+        // the check last created reservation
+        cy.getReservations().then((response) => {
+            expect(response.status).to.eq(200);
+            cy.log(JSON.stringify(response.body))
+            let lastID = response.body[response.body.length - 1].id
+            cy.log(lastID)
+
+            // edit the last reservation
+            cy.editReservation(lastID, "2020-01-05T12:00:00.000Z", "2021-05-25", "2021-06-30", 1, 1, 1).then((response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body))
+
+            }))
+
+            // check the last reservation
+            cy.getReservation(lastID).then((response) => {
+                expect(response.status).to.eq(200);
+                expect(response.body.created).to.eq("2020-01-05T12:00:00.000Z")
+                expect(response.body.start).to.eq("2021-05-25")
+                expect(response.body.end).to.eq("2021-06-30")
+                expect(response.body.client).to.eq(1)
+                expect(response.body.room).to.eq(1)
+                expect(response.body.bill).to.eq(1)
+                cy.log(JSON.stringify(response.body))
             })
 
-            
-        }))
-
-    }) 
-
-
+            // delete the last reservation
+            cy.deleteReservation(lastID).then((response => {
+                expect(response.status).to.eq(200)
+                cy.log(JSON.stringify(response.body))
+            }))
+        })
+    })
 })

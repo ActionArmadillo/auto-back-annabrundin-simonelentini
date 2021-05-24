@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "cypress:open": "cypress open",
-    "cypress:rep": "cypress run --reporter mochawesome"
+    "cypress:rep": "cypress run --reporter mochawesome",
+    "cypress:merge": "mochawesome-merge cypress/report/m-report/*.json > cypress/report/output.json",
+    "cypress:marge": "marge cypress/report/output.json --reportDir cypress/report/ --inline",
+    "generate:report":"rm cypress/report/ -Rf && npm run cypress:rep && npm run cypress:rep && npm run cypress:rep && npm run cypress:rep && npm run cypress:merge && npm run cypress:marge"
   },
   "keywords": [],
   "author": "",
