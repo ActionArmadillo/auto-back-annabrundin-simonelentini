@@ -1,10 +1,14 @@
 /// <reference types = "cypress" />
+
 // reservations and reservation api functionality
+
 const NEW_RESERVATION_URL = 'http://localhost:3000/api/reservation/new';
 const RESERVATIONS_URL = 'http://localhost:3000/api/reservations';
 const RESERVATION_URL = 'http://localhost:3000/api/reservation/';
 
+
 Cypress.Commands.add('createNewReservation', (id, created, start, end, client, room, bill) => {
+
     cy.request({
         method: 'POST',
         url: NEW_RESERVATION_URL,
@@ -13,6 +17,7 @@ Cypress.Commands.add('createNewReservation', (id, created, start, end, client, r
             'Content-Type': 'application/json'
         },
         body: {
+
             "id": id,
             "created": created,
             "start": start,
@@ -52,12 +57,15 @@ Cypress.Commands.add('editReservation', (id, created, start, end, client, room, 
     cy.request({
         method: 'PUT',
         url: RESERVATION_URL + id,
+
         headers: {
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
         body: {
+
             "id": id,
+
             "created": created,
             "start": start,
             "end": end,
@@ -79,3 +87,4 @@ Cypress.Commands.add('deleteReservation', (reservationId) => {
         }
     })
 })
+
