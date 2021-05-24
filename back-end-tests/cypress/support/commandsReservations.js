@@ -48,16 +48,17 @@ Cypress.Commands.add('getReservation', (reservationId) => {
     })
 })
 
-Cypress.Commands.add('editReservation', (reservationId, start, end, client, room, bill) => {
+Cypress.Commands.add('editReservation', (id, created, start, end, client, room, bill) => {
     cy.request({
         method: 'PUT',
-        url: RESERVATION_URL + roomID,
+        url: RESERVATION_URL + id,
         headers: {
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
         body: {
-            "reservationId": reservationId,
+            "id": id,
+            "created": created,
             "start": start,
             "end": end,
             "client": client,
