@@ -5,12 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "test:run": "cypress run --reporter mochawesome",
+    "test:merge": "mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/output.json",
+    "test:merge:report":"marge cypress/report/output.json --reportDir cypress/report/ --inline",
+    "generate:report":"rm cypress/report/ -Rf && npm run test:run && npm run test:merge && npm run test:merge:report"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^7.3.0"
+    "cypress": "^7.3.0",
+    "mochawesome": "^6.2.2",
+    "mochawesome-merge": "^4.2.0"
   }
 }
