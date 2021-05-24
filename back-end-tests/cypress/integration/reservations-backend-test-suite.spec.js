@@ -4,7 +4,7 @@
 //                          test cases                             //
 //-----------------------------------------------------------------//
 
-describe('Test suite for the backend tests of Hotel site', () => {
+describe('Test suite for the backend tests of Hotel site (Reservations)', () => {
     beforeEach(() => {
         cy.login()
     })
