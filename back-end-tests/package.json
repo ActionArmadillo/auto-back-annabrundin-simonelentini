@@ -8,7 +8,7 @@
     "cypress:rep": "cypress run --reporter mochawesome",
     "cypress:merge": "mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/output.json",
     "cypress:marge": "marge cypress/report/output.json --reportDir cypress/report/ --inline",
-    "generate:report":"rm cypress/report/ -Rf && npm run cypress:rep && npm run cypress:rep && npm run cypress:rep && npm run cypress:rep && npm run cypress:merge && npm run cypress:marge"
+    "generate:report": "rm cypress/report/ -Rf && npm run cypress:rep && npm run cypress:rep && npm run cypress:rep && npm run cypress:rep && npm run cypress:merge && npm run cypress:marge"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "cypress": "^7.3.0"
   },
   "dependencies": {
+    "faker": "^5.5.3",
     "mocha": "^5.2.0",
     "mochawesome": "^6.2.2",
     "mochawesome-merge": "^4.2.0"

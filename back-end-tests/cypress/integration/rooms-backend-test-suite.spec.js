@@ -49,12 +49,10 @@ describe('Test suite for the backend tests of Hotel site (Rooms)', () => {
         })).then((response => {
             let lastID = response.body[response.body.length - 1].id
             let created = response.body[lastID - 1].created
-
-            cy.log(JSON.stringify(response.body))
-
+            //cy.log(JSON.stringify(response.body))
             cy.editRoom(lastID, created, "double", 5, 555, true, 1024, ["ensuite", "sea_view"]).then((response => {
                 expect(response.status).to.eq(200)
-                cy.log(JSON.stringify(response.body[2]))
+                //cy.log(JSON.stringify(response.body[2]))
             }))
         }))
 
