@@ -1,5 +1,5 @@
 /// <reference types = "cypress" />
-import * as bill from '../helpers/billHelper'
+import * as client from '../helpers/clientHelper'
 
 //-----------------------------------------------------------------//
 //                          variables                              //
@@ -19,15 +19,14 @@ describe('Test suite for the backend tests of Hotel site (Bills)', () => {
         cy.logout()
     });
 
-    it("TCO7 - Create new bill and validate the result", () => {
-        bill.createBill()
+    it("TCO5 - Create new client", () => {
+        client.createClient()
     })
 
-    it("TCO8 - Edit a bill and validate the result", () => {
-        bill.editLastBill()
+    it("TCO6 - Edit and delete the last client", () => {
+        client.editLastClient()
+        client.deleteLastClient()
     })
 
-    it("TCO - Delete a bill and validate the result", () => {
-        bill.deleteLastBill()
-    })
+   
 })

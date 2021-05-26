@@ -25,9 +25,9 @@ function createClient() {
 
         expect(clientData.id).is.greaterThan(0)
         expect(clientData.created).is.not.empty
-        expect(clientData.name).to.eq(clientData.name)
-        expect(clientData.email).to.eq(clientData.email)
-        expect(clientData.telephone).to.eq(clientData.telephone)
+        expect(clientData.name).to.eq(client.name)
+        expect(clientData.email).to.eq(client.email)
+        expect(clientData.telephone).to.eq(client.telephone)
 
 
     }))
