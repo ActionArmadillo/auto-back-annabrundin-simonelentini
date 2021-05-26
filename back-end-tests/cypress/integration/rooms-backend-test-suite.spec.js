@@ -21,7 +21,7 @@ describe('Test suite for the backend tests of Hotel site (Rooms)', () => {
     })
 
     it('TC02 - Create a new Room', () => {
-        cy.createNewRoom("", "", "double", 44441, 133, true, 440, ["balcony", "ensuite"]).then((response => {
+        cy.createNewRoom(Object).then((response => {
             expect(response.status).to.eq(200)
             cy.log(JSON.stringify(response.body))
         }))
