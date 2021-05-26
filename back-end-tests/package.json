@@ -9,6 +9,7 @@
     "cypress:merge": "mochawesome-merge cypress/report/mochawesome-report/*.json > cypress/report/output.json",
     "cypress:marge": "marge cypress/report/output.json --reportDir cypress/report/ --inline",
     "generate:report": "rm cypress/report/ -Rf && npm run cypress:rep && npm run cypress:merge && npm run cypress:marge"
+
   },
   "keywords": [],
   "author": "",
