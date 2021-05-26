@@ -4,9 +4,9 @@ function createClientBody() {
     let clientBody = {
         "id": "",
         "created": "",
-        "name": name,
-        "email": email,
-        "telephone": telephone
+        "name": faker.name.findName(),
+        "email": faker.internet.email(),
+        "telephone": faker.phone.phoneNumber()
     }
     return clientBody
 }
@@ -23,11 +23,11 @@ function createClient() {
         let lastClientID = response.body[response.body.length - 1].id
         var clientData = response.body[lastClientID - 1]
 
-        expect(clientData.id).is.greaterThan(1)
+        expect(clientData.id).is.greaterThan(0)
         expect(clientData.created).is.not.empty
-        expect(clientData.name).to.eq(client.name)
-        expect(clientData.email).to.eq(client.email)
-        expect(clientData.telephone).to.eq(client.telephone)
+        expect(clientData.name).to.eq(clientData.name)
+        expect(clientData.email).to.eq(clientData.email)
+        expect(clientData.telephone).to.eq(clientData.telephone)
 
 
     }))
@@ -38,9 +38,9 @@ function editLastClient() {
     cy.getClients().then((response => {
         let lastClientID = response.body[response.body.length - 1].id
         let created = response.body[lastClientID - 1].created
-        let name = faker.datatype.number({ min: 1000, max: 10000 })
-        let email = faker.datatype.number({ min: 1000, max: 10000 })
-        let telephone = faker.datatype.number({ min: 1000, max: 10000 })
+        let name = faker.name.findName()
+        let email = faker.internet.email()
+        let telephone =  faker.phone.phoneNumber()
         clientBody = {
             "id": lastClientID,
             "created": created,
