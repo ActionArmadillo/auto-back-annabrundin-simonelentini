@@ -19,15 +19,15 @@ describe('Test suite for the backend tests of Hotel site (Bills)', () => {
         cy.logout()
     });
 
-    it("TCO7 - Create new bill", () => {
+    it("TCO7 - Create new bill and validate the result", () => {
         bill.createBill()
     })
 
-    it("TCO8 - Edit a bill", () => {
+    it("TCO8 - Edit a bill and validate the result", () => {
         bill.editLastBill()
     })
 
-    it("TCO - Delete a bill", () => {
+    it("TCO - Delete a bill and validate the result", () => {
         bill.deleteLastBill()
     })
 })

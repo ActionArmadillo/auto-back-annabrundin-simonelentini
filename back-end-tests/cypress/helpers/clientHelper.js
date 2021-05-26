@@ -13,7 +13,7 @@ function createClientBody() {
 
 function createClient() {
     var client = createClientBody()
-    cy.createNewBill(client).then((response => {
+    cy.createNewClient(client).then((response => {
         expect(response.status).to.eq(200)
         cy.log(JSON.stringify(response.body))
     }))
@@ -81,7 +81,7 @@ function deleteLastClient() {
             expect(response.status).to.eq(200)
             let lastClientID = response.body[response.body.length - 1].id
             var clientData = response.body[lastClientID - 1]
-            expect(clientData.id).to.be.lessThan(2)
+            expect(clientData.id).to.be.lessThan(3)
         }))
     }))
 }
