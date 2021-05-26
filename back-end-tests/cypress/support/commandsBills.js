@@ -55,7 +55,8 @@ Cypress.Commands.add('editBill', (billID, billBody) => {
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
-        body: billBody /*{
+        body: billBody
+         /*{
             "id": id,
             "created": created,
             "value": value,
