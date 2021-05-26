@@ -4,7 +4,8 @@ const NEW_ROOM_URL = 'http://localhost:3000/api/room/new';
 const ROOMS_URL = 'http://localhost:3000/api/rooms';
 const ROOM_URL = 'http://localhost:3000/api/room/';
 
-Cypress.Commands.add('createNewRoom', (id, created, category, floor, number, available, price, features) => {
+//Cypress.Commands.add('createNewRoom', (id, created, category, floor, number, available, price, features) => {
+Cypress.Commands.add('createNewRoom', (roomBody) => {
     cy.request({
         method: 'POST',
         url: NEW_ROOM_URL,
@@ -12,7 +13,7 @@ Cypress.Commands.add('createNewRoom', (id, created, category, floor, number, ava
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
-        body: {
+        body: roomBody /*{
             "id": id,
             "created": created,
             "category": category,
@@ -21,7 +22,7 @@ Cypress.Commands.add('createNewRoom', (id, created, category, floor, number, ava
             "available": available,
             "price": price,
             "features": features
-        }
+        }*/
     })
 })
 
@@ -48,8 +49,8 @@ Cypress.Commands.add('getRoom', (roomID) => {
         }
     })
 })
-
-Cypress.Commands.add('editRoom', (roomID, created, category, floor, number, available, price, features) => {
+Cypress.Commands.add('editRoom', (roomID, roomBody) => {
+    //Cypress.Commands.add('editRoom', (roomID, created, category, floor, number, available, price, features) => {
     cy.request({
         method: 'PUT',
         url: ROOM_URL + roomID,
@@ -57,7 +58,8 @@ Cypress.Commands.add('editRoom', (roomID, created, category, floor, number, avai
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
-        body: {
+        body: roomBody
+        /*{
             "id": roomID,
             "created": created,
             "category": category,
@@ -66,7 +68,7 @@ Cypress.Commands.add('editRoom', (roomID, created, category, floor, number, avai
             "available": available,
             "price": price,
             "features": features
-        }
+        }*/
     })
 })
 
