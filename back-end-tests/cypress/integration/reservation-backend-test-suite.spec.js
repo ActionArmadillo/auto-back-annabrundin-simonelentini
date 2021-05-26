@@ -10,16 +10,12 @@ describe('Test suite for the backend tests of Hotel site (Rooms)', () => {
     });
 
 
-    it('create reservation and validate the result', () => {
+    it('TC09 - Create new Reservation', () => {
         reservation.createReservation()
     })
 
-    it('edit last reservation and validate the result', () => {
+    it('TC10 - Edit and Delete last Reservation', () => {
         reservation.editLastReservation()
+        reservation.deleteLastReservation()
     })
-
-    it('delete last reservation and validate the result', () => {
-        cy.log('under construction')
-    })
-
 })

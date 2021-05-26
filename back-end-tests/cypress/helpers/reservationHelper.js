@@ -57,11 +57,34 @@ function editLastReservation() {
         }
         cy.editReservation(lastReservationID, reservationBody).then((response => {
             expect(response.status).to.eq(200)
+        }))
+    }))
+
+    cy.getReservations().then((response => {
+        expect(response.status).to.eq(200)
+        let lastReservationID = response.body[response.body.length - 1].id
+        var reservationData = response.body[lastReservationID - 1]
+
+        expect(reservationData.start).to.eq(reservationBody.start)
+        expect(reservationData.end).to.eq(reservationBody.end)
+    }))
+}
+
+function deleteLastReservation() {
+    cy.getReservations().then((response => {
+        expect(response.status).to.eq(200)
+    })).then((response => {
+        let lastReservationID = response.body[response.body.length - 1].id
+        cy.deleteReservation(lastReservationID).then((response => {
+            expect(response.status).to.eq(200)
+        }))
+
+        cy.getReservations().then((response => {
+            expect(response.status).to.eq(200)
             let lastReservationID = response.body[response.body.length - 1].id
             var reservationData = response.body[lastReservationID - 1]
 
-            expect(reservationData.start).to.eq(reservationBody.start)
-            expect(reservationData.end).to.eq(reservationBody.end)
+            expect(reservationData.id).to.be.lessThan(2)
         }))
 
     }))
@@ -69,7 +92,8 @@ function editLastReservation() {
 
 module.exports = {
     createReservation,
-    editLastReservation
+    editLastReservation,
+    deleteLastReservation
 }
 
 

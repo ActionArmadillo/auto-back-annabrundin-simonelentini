@@ -57,13 +57,13 @@ Cypress.Commands.add('getReservation', (reservationId) => {
 Cypress.Commands.add('editReservation', (reservationID, body) => {
     cy.request({
         method: 'PUT',
-        url: RESERVATION_URL + id,
+        url: RESERVATION_URL + reservationID,
 
         headers: {
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
-        body: {
+        body: body/*{
 
             "id": id,
 
@@ -73,7 +73,7 @@ Cypress.Commands.add('editReservation', (reservationID, body) => {
             "client": client,
             "room": room,
             "bill": bill
-        }
+        }*/
     })
 })
 

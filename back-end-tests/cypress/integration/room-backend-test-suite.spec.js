@@ -9,17 +9,22 @@ describe('Test suite for the backend tests of Hotel site (Rooms)', () => {
         cy.logout()
     });
 
+    it('TC01 - Retrieve rooms list', () => {
+        cy.getRooms().then((response => {
+            expect(response.status).to.eq(200)
+            expect(response.body).not.be.empty
+        }))
+    })
 
-    it('create room and validate the result', () => {
+    it('TC02 - Create a new Room', () => {
         room.createRoom()
     })
 
-    it('edit last room and validate the result', () => {
+    it('TC03 - Edit last Room', () => {
         room.editLastRoom()
     })
 
-    it('delete last room and validate the result', () => {
+    it('TC04 - Delete last Room', () => {
         room.deleteLastRoom()
     })
-
 })
