@@ -4,7 +4,6 @@ const NEW_BILLS_URL = 'http://localhost:3000/api/bill/new';
 const BILLS_URL = "http://localhost:3000/api/bills";
 const BILL_URL = 'http://localhost:3000/api/bill/';
 
-//Cypress.Commands.add('createNewBill', (id, created, value, paid) => {
 Cypress.Commands.add('createNewBill', (billBody) => {
     cy.request({
         method: 'POST',
@@ -13,12 +12,7 @@ Cypress.Commands.add('createNewBill', (billBody) => {
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
-        body: billBody /*{
-            "id": id,
-            "created": created,
-            "value": value,
-            "paid": paid
-        }*/
+        body: billBody
     })
 })
 
@@ -46,7 +40,7 @@ Cypress.Commands.add('getBill', (billID) => {
     })
 })
 
-//Cypress.Commands.add('editBill', (id, created, value, paid) => {
+
 Cypress.Commands.add('editBill', (billID, billBody) => {
     cy.request({
         method: 'PUT',
@@ -56,12 +50,7 @@ Cypress.Commands.add('editBill', (billID, billBody) => {
             'Content-Type': 'application/json'
         },
         body: billBody
-         /*{
-            "id": id,
-            "created": created,
-            "value": value,
-            "paid": paid
-        }*/
+
     })
 })
 

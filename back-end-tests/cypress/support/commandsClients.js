@@ -4,7 +4,7 @@ const NEW_CLIENTS_URL = 'http://localhost:3000/api/client/new';
 const CLIENTS_URL = 'http://localhost:3000/api/clients';
 const CLIENT_URL = 'http://localhost:3000/api/client/';
 
-//Cypress.Commands.add('createNewClient', (id, created, name, email, telephone) => {
+
 Cypress.Commands.add('createNewClient', (clientBody) => {
     cy.request({
         method: 'POST',
@@ -14,13 +14,6 @@ Cypress.Commands.add('createNewClient', (clientBody) => {
             'Content-Type': 'application/json'
         },
         body: clientBody
-        /*{
-            "id": id,
-            "created": created,
-            "name": name,
-            "email": email,
-            "telephone": telephone
-        }*/
     })
 })
 
@@ -48,23 +41,16 @@ Cypress.Commands.add('getClient', (clientID) => {
     })
 })
 
-//Cypress.Commands.add('editClient', (id, created, name, email, telephone) => {
-    Cypress.Commands.add('editClient', (clientID, clientBody) => {  
-cy.request({
+
+Cypress.Commands.add('editClient', (clientID, clientBody) => {
+    cy.request({
         method: 'PUT',
         url: CLIENT_URL + clientID,
         headers: {
             'X-User-Auth': JSON.stringify(Cypress.env().loginToken),
             'Content-Type': 'application/json'
         },
-        body:clientBody 
-        /*{
-            "id": id,
-            "created": created,
-            "name": name,
-            "email": email,
-            "telephone": telephone
-        }*/
+        body: clientBody
     })
 })
 
