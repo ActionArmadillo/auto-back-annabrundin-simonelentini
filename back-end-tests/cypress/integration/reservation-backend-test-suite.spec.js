@@ -1,6 +1,6 @@
 import * as reservation from '../helpers/reservationHelper'
 
-describe('Test suite for the backend tests of Hotel site (Rooms)', () => {
+describe('Test suite for the backend tests of Hotel site (Reservations)', () => {
     beforeEach(() => {
         cy.login()
     })
