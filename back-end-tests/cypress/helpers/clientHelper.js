@@ -23,7 +23,7 @@ function createClient() {
         let lastClientID = response.body[response.body.length - 1].id
         var clientData = response.body[lastClientID - 1]
 
-        expect(clientData.id).is.greaterThan(0)
+        expect(clientData.id).is.greaterThan(2)
         expect(clientData.created).is.not.empty
         expect(clientData.name).to.eq(client.name)
         expect(clientData.email).to.eq(client.email)
